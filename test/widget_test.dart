@@ -56,6 +56,7 @@ void main() {
           ),
         ),
       );
+      await tester.pump();
       expect(find.byKey(targetKey), findsOneWidget);
     });
 
