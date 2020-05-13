@@ -15,7 +15,8 @@ import 'package:widgettestdemo/model/create_account_data.dart';
 
 void main() {
   group("Bloc Listener", () {
-    testWidgets('throws if initialized with null bloc, listener, and child', (tester) async {
+    testWidgets('throws if initialized with null bloc, listener, and child',
+        (tester) async {
       try {
         await tester.pumpWidget(
           BlocListener<Bloc, dynamic>(
@@ -30,7 +31,8 @@ void main() {
       }
     });
 
-    testWidgets('throws if initialized with null listener and child', (tester) async {
+    testWidgets('throws if initialized with null listener and child',
+        (tester) async {
       try {
         await tester.pumpWidget(
           BlocListener<MainBloc, MainState>(
@@ -83,11 +85,10 @@ void main() {
         data.password = "pass";
 
         mainBloc.add(CreateAccountPressedEvent(data));
-        await tester.pumpAndSettle(Duration(milliseconds: 300));
-        expectLater(mainBloc, emitsInOrder(expectedStates)).then((_) {
-          expect(listenerCallCount, 1);
-          expect(latestState, AccountCreatedState());
-        });
+        await tester.pump();
+        await expectLater(mainBloc, emitsInOrder(expectedStates));
+        expect(listenerCallCount, 1);
+        expect(latestState, AccountCreatedState());
       });
     });
   });
